@@ -92,7 +92,8 @@ public class ProductController {
 					// 상품명.상품번호-상품명.상품번호 ~~~
 					historyNo = cookie.getValue()+"-" + String.valueOf(prodNo);
 					Cookie historyNoCookie = new Cookie("historyNo", historyNo);
-					response.addCookie(  );
+					historyNoCookie.setPath("/");
+					response.addCookie( historyNoCookie );
 					System.out.println("저장된 historyNo : "+historyNo);
 				} else {
 					System.out.println("이미 검색한 상품입니다.");
@@ -112,7 +113,9 @@ public class ProductController {
 			String[] searchArr = historyCookie.split("-");
 			// 일부 특수 문자만 쿠키에 사용할 수 있습니다. 예를 들면 하이픈(-), 언더스코어(_), 마침표(.) 등이 있습니다.
 			histories = historyCookie+"-" + prodName+ "."+ String.valueOf(prodNo);
-			response.addCookie(new Cookie("histories", histories ));
+			Cookie historiesCookie = new Cookie("histories", histories);
+			historiesCookie.setPath("/");
+			response.addCookie( historiesCookie );
 			System.out.println("저장된 histories : "+ histories );
 		}
 		
@@ -120,8 +123,12 @@ public class ProductController {
 			// addCookie를 통해 생성한 기본 cookie 수명 = -1  :: client가 browser 종료 시 자동 삭제
 			histories = prodName + "."+ String.valueOf(prodNo);
 			historyNo = String.valueOf(prodNo);
-			response.addCookie( new Cookie("histories", histories) );					
-			response.addCookie( new Cookie("historyNo", historyNo) );	
+			Cookie historiesCookie =  new Cookie("histories", histories);
+			historiesCookie.setPath("/");
+			response.addCookie( historiesCookie );					
+			Cookie historyNoCookie = new Cookie("historyNo", historyNo);
+			historyNoCookie.setPath("/");
+			response.addCookie( historyNoCookie );	
 			System.out.println("history 쿠키가 없어서 새로 생성했습니다.");
 		}
 
